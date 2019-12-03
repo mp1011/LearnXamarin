@@ -16,9 +16,9 @@
            HorizontalOptions="Center"
            VerticalOptions="CenterAndExpand" />
 
-        <local:GameGrid BindingContext="{Binding Grid}" HeightRequest="1500" BackgroundColor="DarkGray">
+        <local:GameGridAlt BindingContext="{Binding Grid}" HeightRequest="1500" BackgroundColor="DarkGray">
             
-        </local:GameGrid>
+        </local:GameGridAlt>
     </StackLayout>
 
 </ContentPage>

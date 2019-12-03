@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:LearnXamarin.Views"
+             mc:Ignorable="d"
+             x:Class="LearnXamarin.Views.GameGridAlt">
+  <ContentView.Content>
+        <Grid x:Name="TheGrid"  BindableLayout.ItemsSource="{Binding Cells}">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.GestureRecognizers>
+                <SwipeGestureRecognizer Direction="Left" Command="{Binding SwipeCommand}" CommandParameter="Left"/>
+                <SwipeGestureRecognizer Direction="Right" Command="{Binding SwipeCommand}" CommandParameter="Right"/>
+                <SwipeGestureRecognizer Direction="Up" Command="{Binding SwipeCommand}" CommandParameter="Up"/>
+                <SwipeGestureRecognizer Direction="Down" Command="{Binding SwipeCommand}" CommandParameter="Down"/>
+            </Grid.GestureRecognizers>
+            <BindableLayout.ItemTemplate>
+                <DataTemplate>
+                    <local:Cell 
+                        CellValue="{Binding Value}"
+                        Grid.Row="{Binding GridPosition.Y}"
+                        Grid.Column="{Binding GridPosition.X}"
+                        />
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </Grid>
+     
+    </ContentView.Content>
+</ContentView>

@@ -12,6 +12,10 @@ namespace LearnXamarin.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Cell : ContentView
     {
+        public int CellValue { get;  set; }
+
+        public static readonly BindableProperty CellValueProperty = BindableProperty.Create(nameof(CellValue), typeof(int), typeof(Cell),0);
+
         public Cell()
         {
             InitializeComponent();
