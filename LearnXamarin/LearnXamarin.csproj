@@ -13,6 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Views\CellAlt.xaml.cs">
+      <DependentUpon>CellAlt.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\GameGridAlt.xaml.cs">
       <DependentUpon>GameGridAlt.xaml</DependentUpon>
     </Compile>

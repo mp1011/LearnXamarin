@@ -30,7 +30,7 @@
             </Grid.GestureRecognizers>
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
-                    <local:Cell 
+                    <local:CellAlt
                         CellValue="{Binding Value}"
                         Grid.Row="{Binding GridPosition.Y}"
                         Grid.Column="{Binding GridPosition.X}"
