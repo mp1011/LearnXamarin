@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="LearnXamarin.Views.Cell">
+  <ContentView.Content>
+
+        <Frame OutlineColor="Green"      
+               BackgroundColor="Yellow" 
+               WidthRequest="180"
+               HeightRequest="180">
+            <Label 
+                BackgroundColor="Orange"
+                Text="{Binding Value}" 
+                HorizontalTextAlignment="Center"
+                VerticalTextAlignment="Center"
+                FontSize="Header"
+                FontAttributes="Bold"
+                />
+        </Frame>
+        
+  </ContentView.Content>
+</ContentView>
