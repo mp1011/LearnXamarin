@@ -3,21 +3,9 @@ using System.Drawing;
 
 namespace LearnXamarin.Models
 {
-    public class GridCell : INotifyPropertyChanged
+    public class GridCell 
     {
-        private int _value;
-        public int Value
-        {
-            get
-            {
-                return _value;
-            }
-            set
-            {
-                _value = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
-            }
-        }
+        public int Value { get; set; }
 
         public Point GridPosition  { get; private set; }
 
@@ -26,8 +14,6 @@ namespace LearnXamarin.Models
             GridPosition = new Point(x, y);
             Value = value;
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public override string ToString()
         {

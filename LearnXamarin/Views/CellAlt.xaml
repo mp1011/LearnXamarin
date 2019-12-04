@@ -13,7 +13,7 @@
                HeightRequest="180">
             <Label  
                 BackgroundColor="Tomato"
-                Text="{Binding CellValue}" 
+                Text="{Binding Value}" 
                 HorizontalTextAlignment="Center"
                 VerticalTextAlignment="Center"
                 FontSize="Header"
