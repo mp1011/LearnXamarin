@@ -12,12 +12,23 @@ namespace LearnXamarin.ViewModels
             get => _value;
             set
             {
+                if (_value == value) return;
                 _value = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Value"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
             }
         }
 
-        public Point GridPosition { get;}
+        private Point gridPosition;
+        public Point GridPosition
+        {
+            get { return gridPosition; }
+            set
+            {
+                if (gridPosition == value) return;
+                gridPosition = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(GridPosition)));
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

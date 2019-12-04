@@ -14,7 +14,18 @@ namespace LearnXamarin.ViewModels
         private readonly GridService _gridService;
         private GameGrid _grid;
 
-        public ObservableCollection<GridCell> Cells { get; } 
+        private ObservableCollection<GridCell> cells;
+        public ObservableCollection<GridCell> Cells
+        {
+            get { return cells; }
+            set
+            {
+                if (cells == value)
+                    return;
+                cells = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Cells)));
+            }
+        } 
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -46,7 +57,8 @@ namespace LearnXamarin.ViewModels
             foreach (var cell in _grid)
                 Cells.Add(cell);
 
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Cells)));
+            // unnecessary - the ObservableCollection raises the INotifyCollectionChanged.CollectionChanged event when you call Add/Remove/Clear
+            //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Cells)));
         }
     }
 }

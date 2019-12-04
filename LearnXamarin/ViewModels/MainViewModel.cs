@@ -13,8 +13,9 @@ namespace LearnXamarin.ViewModels
             get => _score;
             set
             {
+                if (_score == value) return;
                 _score = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Score"));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Score)));
             }
         }
 
