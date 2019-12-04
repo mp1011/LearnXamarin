@@ -5,7 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:LearnXamarin.Views"
              mc:Ignorable="d"
-             x:Class="LearnXamarin.Views.GameGridAlt">
+             x:Class="LearnXamarin.Views.GameGridAlt"
+             BindingContext="{Binding [GridViewModelAlternate], Source={StaticResource Locator}}">
   <ContentView.Content>
         <Grid x:Name="TheGrid"  BindableLayout.ItemsSource="{Binding Cells}">
             <Grid.RowDefinitions>

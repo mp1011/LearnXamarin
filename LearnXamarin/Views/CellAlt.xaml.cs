@@ -12,11 +12,14 @@ namespace LearnXamarin.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CellAlt : ContentView
     {
+        public string TestSomething { get; set; } = "XYZ";
+
         public int CellValue 
         {
             get
             {
-                return (int)GetValue(CellValueProperty);
+                var cellValue = (int)GetValue(CellValueProperty);
+                return cellValue;
             }
             set
             {
@@ -40,7 +43,6 @@ namespace LearnXamarin.Views
         public CellAlt()
         {
             InitializeComponent();
-            CellValue = 5;
         }
     }
 }
