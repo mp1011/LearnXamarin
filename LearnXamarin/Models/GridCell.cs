@@ -14,12 +14,13 @@ namespace LearnXamarin.Models
             }
             set
             {
+                if (_value == value) return;
                 _value = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
             }
         }
 
-        public Point GridPosition  { get; private set; }
+        public Point GridPosition { get; private set; }
 
         public GridCell(int x, int y, int value)
         {
