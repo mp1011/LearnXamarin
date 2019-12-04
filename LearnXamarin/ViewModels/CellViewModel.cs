@@ -1,25 +1,20 @@
 ﻿using LearnXamarin.Models;
-using System.ComponentModel;
+using LearnXamarin.XamarinBase;
 using System.Drawing;
 
 namespace LearnXamarin.ViewModels
 {
-    public class CellViewModel : INotifyPropertyChanged
+    public class CellViewModel : ObservableObject
     {
-        private int _value = 0;
+        private int _value;
         public int Value
         {
             get => _value;
-            set
-            {
-                _value = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Value"));
-            }
+            set { Set(nameof(Value), ref _value, value); }
         }
 
-        public Point GridPosition { get;}
+        public Point GridPosition { get; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public CellViewModel(GridCell cell)
         {
@@ -29,4 +24,4 @@ namespace LearnXamarin.ViewModels
 
     }
 }
-    
+

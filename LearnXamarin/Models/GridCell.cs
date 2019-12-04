@@ -1,13 +1,19 @@
 ﻿using System.ComponentModel;
 using System.Drawing;
+using LearnXamarin.XamarinBase;
 
 namespace LearnXamarin.Models
 {
-    public class GridCell 
+    public class GridCell : ObservableObject
     {
-        public int Value { get; set; }
+        private int _value;
+        public int Value
+        {
+            get { return _value; }
+            set { Set(nameof(Value), ref _value, value); }
+        }
 
-        public Point GridPosition  { get; private set; }
+        public Point GridPosition { get; private set; }
 
         public GridCell(int x, int y, int value)
         {
@@ -19,5 +25,6 @@ namespace LearnXamarin.Models
         {
             return $"[{Value}] ({GridPosition.X},{GridPosition.Y})";
         }
+
     }
 }

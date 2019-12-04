@@ -1,14 +1,14 @@
-﻿using LearnXamarin.Extensions;
+﻿using System.Linq;
+using System.Windows.Input;
+using LearnXamarin.Extensions;
 using LearnXamarin.Models;
 using LearnXamarin.Services;
-using System.ComponentModel;
-using System.Linq;
-using System.Windows.Input;
+using LearnXamarin.XamarinBase;
 using Xamarin.Forms;
 
 namespace LearnXamarin.ViewModels
 {
-    public class GridViewModel : INotifyPropertyChanged
+    public class GridViewModel : ObservableObject
     {
         private readonly GridService _gridService;
         private GameGrid _grid;
@@ -16,18 +16,9 @@ namespace LearnXamarin.ViewModels
         private CellViewModel[] _cells;
         public CellViewModel[] Cells
         {
-            get
-            {
-                return _cells;
-            }
-            set
-            {
-                _cells = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Cells)));
-            }
+            get { return _cells; }
+            set { Set(nameof(Cells), ref _cells, value); }
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public ICommand SwipeCommand => new Command(directionString =>
         {
@@ -54,8 +45,6 @@ namespace LearnXamarin.ViewModels
             Cells = _grid
                 .Select(cell => new CellViewModel(cell))
                 .ToArray();
-
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Cells)));
         }
     }
 }

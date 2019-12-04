@@ -1,21 +1,15 @@
-﻿using LearnXamarin.Models;
-using System.ComponentModel;
+﻿using LearnXamarin.XamarinBase;
 
 namespace LearnXamarin.ViewModels
 {
-    class MainViewModel : INotifyPropertyChanged
+    class MainViewModel : ObservableObject
     {
         private int _score = 1234;
         public int Score
         {
             get => _score;
-            set
-            {
-                _score = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Score"));
-            }
+            set { Set(nameof(Score), ref _score, value); }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }
