@@ -13,9 +13,15 @@ namespace LearnXamarin.Views
     public partial class CellAlt : ContentView
     {
         public int CellValue 
-        { 
-            get;  
-            set; 
+        {
+            get
+            {
+                return (int)GetValue(CellValueProperty);
+            }
+            set
+            {
+                SetValue(CellValueProperty, value);
+            }
         }
 
         public static readonly BindableProperty CellValueProperty = BindableProperty.Create(
@@ -34,6 +40,7 @@ namespace LearnXamarin.Views
         public CellAlt()
         {
             InitializeComponent();
+            CellValue = 5;
         }
     }
 }
