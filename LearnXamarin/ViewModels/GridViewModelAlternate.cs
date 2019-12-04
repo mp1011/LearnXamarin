@@ -57,8 +57,6 @@ namespace LearnXamarin.ViewModels
             Cells.Clear();
             foreach (var cell in _grid)
                 Cells.Add(cell);
-
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Cells)));
         }
     }
 }

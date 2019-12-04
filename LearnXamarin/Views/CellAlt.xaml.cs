@@ -12,8 +12,6 @@ namespace LearnXamarin.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CellAlt : ContentView
     {
-        public string TestSomething { get; set; } = "XYZ";
-
         public int CellValue 
         {
             get
