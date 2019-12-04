@@ -15,7 +15,7 @@ namespace LearnXamarin.Models
             set
             {
                 _value = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(value)));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
             }
         }
 
