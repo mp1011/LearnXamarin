@@ -24,6 +24,7 @@ namespace LearnXamarin.Views
             returnType: typeof(int),
             defaultValue: 0,
             propertyChanged: CellValueChanged,
+            defaultBindingMode: BindingMode.TwoWay);
 
         private static void CellValueChanged(BindableObject bindable, object oldValue, object newValue)
         {
