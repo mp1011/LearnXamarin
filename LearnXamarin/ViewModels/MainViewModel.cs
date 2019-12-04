@@ -5,8 +5,6 @@ namespace LearnXamarin.ViewModels
 {
     class MainViewModel : INotifyPropertyChanged
     {
-        public GridViewModel Grid { get; }
-
         private int _score = 1234;
         public int Score
         {
@@ -17,11 +15,6 @@ namespace LearnXamarin.ViewModels
                 _score = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Score)));
             }
-        }
-
-        public MainViewModel(GridViewModel grid)
-        {
-            Grid = grid;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

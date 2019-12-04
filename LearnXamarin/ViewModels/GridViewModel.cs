@@ -13,7 +13,19 @@ namespace LearnXamarin.ViewModels
         private readonly GridService _gridService;
         private GameGrid _grid;
 
-        public CellViewModel[] Cells { get; private set; }
+        private CellViewModel[] _cells;
+        public CellViewModel[] Cells
+        {
+            get
+            {
+                return _cells;
+            }
+            set
+            {
+                _cells = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Cells)));
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
