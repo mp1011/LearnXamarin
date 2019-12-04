@@ -12,9 +12,23 @@ namespace LearnXamarin.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CellAlt : ContentView
     {
-        public int CellValue { get;  set; }
+        public int CellValue 
+        { 
+            get;  
+            set; 
+        }
 
-        public static readonly BindableProperty CellValueProperty = BindableProperty.Create(nameof(CellValue), typeof(int), typeof(Cell),0);
+        public static readonly BindableProperty CellValueProperty = BindableProperty.Create(
+            propertyName: nameof(CellValue),
+            declaringType: typeof(Cell),
+            returnType: typeof(int),
+            defaultValue: 0,
+            propertyChanged: CellValueChanged,
+
+        private static void CellValueChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            (bindable as CellAlt).CellValue = (int)newValue;
+        }
 
         public CellAlt()
         {
