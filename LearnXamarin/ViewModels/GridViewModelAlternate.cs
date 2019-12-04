@@ -1,10 +1,8 @@
-﻿using LearnXamarin.Extensions;
+﻿using System.Collections.ObjectModel;
+using LearnXamarin.Extensions;
 using LearnXamarin.Models;
 using LearnXamarin.Services;
 using LearnXamarin.XamarinBase;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace LearnXamarin.ViewModels
 {
@@ -20,11 +18,7 @@ namespace LearnXamarin.ViewModels
             set { Set(nameof(Cells), ref _cells, value); }
         }
 
-        public ICommand SwipeCommand => new Command(directionString =>
-        {
-            var dir = (directionString.ToString()).ParseEnum<Direction>();
-            OnSwiped(dir);
-        });
+        public RelayCommand<string> SwipeCommand => new RelayCommand<string>(SwipeExecuted);
 
         public GridViewModelAlternate(GridService gridService)
         {
@@ -35,6 +29,12 @@ namespace LearnXamarin.ViewModels
             Cells.Clear();
             foreach (var cell in _grid)
                 Cells.Add(cell);
+        }
+
+        private void SwipeExecuted(string directionString)
+        {
+            var direction = directionString.ParseEnum<Direction>();
+            OnSwiped(direction);
         }
 
         private void OnSwiped(Direction direction)
