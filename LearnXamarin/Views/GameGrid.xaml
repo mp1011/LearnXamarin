@@ -5,7 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:LearnXamarin.Views"
              mc:Ignorable="d"
-             x:Class="LearnXamarin.Views.GameGrid">
+             x:Class="LearnXamarin.Views.GameGrid"
+             BindingContext="{Binding [GridViewModel], Source={StaticResource Locator}}">
   <ContentView.Content>
         <Grid x:Name="TheGrid"  BindableLayout.ItemsSource="{Binding Cells}">
             <Grid.RowDefinitions>
@@ -30,8 +31,8 @@
             </Grid.GestureRecognizers>
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
-                    <local:Cell 
-                        BindingContext="{Binding}"
+                    <local:Cell
+                        CellValue="{Binding Value}"
                         Grid.Row="{Binding GridPosition.Y}"
                         Grid.Column="{Binding GridPosition.X}"
                         />

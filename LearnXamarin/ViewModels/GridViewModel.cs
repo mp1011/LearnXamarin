@@ -1,8 +1,8 @@
 ﻿using LearnXamarin.Extensions;
 using LearnXamarin.Models;
 using LearnXamarin.Services;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -10,11 +10,13 @@ namespace LearnXamarin.ViewModels
 {
     public class GridViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private readonly GridService _gridService;
         private GameGrid _grid;
 
-        private CellViewModel[] _cells;
-        public CellViewModel[] Cells
+        private ObservableCollection<GridCell> _cells;
+        public ObservableCollection<GridCell> Cells
         {
             get
             {
@@ -27,8 +29,6 @@ namespace LearnXamarin.ViewModels
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public ICommand SwipeCommand => new Command(directionString =>
         {
             var dir = (directionString.ToString()).ParseEnum<Direction>();
@@ -39,9 +39,11 @@ namespace LearnXamarin.ViewModels
         {
             _gridService = gridService;
             _grid = _gridService.CreateNew(new System.Drawing.Size(5, 5), 2);
-            Cells = _grid
-                .Select(cell => new CellViewModel(cell))
-                .ToArray();
+
+            Cells = new ObservableCollection<GridCell>();
+            Cells.Clear();
+            foreach (var cell in _grid)
+                Cells.Add(cell);
         }
 
         private void OnSwiped(Direction direction)
@@ -51,11 +53,9 @@ namespace LearnXamarin.ViewModels
             _gridService.AddRandomCell(_grid);
 
             //hack
-            Cells = _grid
-                .Select(cell => new CellViewModel(cell))
-                .ToArray();
-
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Cells)));
+            Cells.Clear();
+            foreach (var cell in _grid)
+                Cells.Add(cell);
         }
     }
 }

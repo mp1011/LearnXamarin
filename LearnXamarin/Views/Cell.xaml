@@ -11,8 +11,8 @@
                BackgroundColor="Yellow" 
                WidthRequest="180"
                HeightRequest="180">
-            <Label 
-                BackgroundColor="Orange"
+            <Label  
+                BackgroundColor="Tomato"
                 Text="{Binding Value}" 
                 HorizontalTextAlignment="Center"
                 VerticalTextAlignment="Center"

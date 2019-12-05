@@ -13,20 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\CellAlt.xaml.cs">
-      <DependentUpon>CellAlt.xaml</DependentUpon>
+    <Compile Update="Views\Cell.xaml.cs">
+      <DependentUpon>Cell.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\GameGridAlt.xaml.cs">
-      <DependentUpon>GameGridAlt.xaml</DependentUpon>
+    <Compile Update="Views\GameGrid.xaml.cs">
+      <DependentUpon>GameGrid.xaml</DependentUpon>
     </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <EmbeddedResource Update="Views\Cell.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\GameGrid.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
   </ItemGroup>
 </Project>

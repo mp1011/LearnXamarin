@@ -9,16 +9,22 @@
              BindingContext="{Binding [MainViewModel], Source={StaticResource Locator}}"
              >
 
-    <StackLayout>
-        
-        <Label Text="{Binding Score}" 
-               FontSize="Title"
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
+    <FlexLayout Direction="Column">
 
-        <local:GameGridAlt HeightRequest="1500" BackgroundColor="DarkGray">
-            
-        </local:GameGridAlt>
-    </StackLayout>
+        <FlexLayout Direction="Row"  FlexLayout.Basis="5%" BackgroundColor="GreenYellow">
+           
+            <Label FontSize="Large" Text="Your Score:" />
+
+            <Label FontSize="Large" Text="{Binding Score}" />
+
+            <Button FontSize="Large" Text="Start Over"/>
+
+        </FlexLayout>
+
+        <local:GameGrid FlexLayout.Basis="Auto" FlexLayout.Grow="1" BackgroundColor="DarkGray">
+
+        </local:GameGrid>
+
+    </FlexLayout>
 
 </ContentPage>
