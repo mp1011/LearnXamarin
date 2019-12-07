@@ -16,7 +16,7 @@ namespace LearnXamarin.Tests.Services
         public void CanFillGridRandomly()
         {
             var service = new GridService(new RandomService());
-            var grid = service.CreateNew(new Size(3, 3),0);
+            var grid = service.CreateNew(new List<GridCell>(), new Size(3, 3),0);
 
             foreach(var index in Enumerable.Range(0,grid.Size.Width*grid.Size.Height))
                 service.AddRandomCell(grid);
@@ -37,14 +37,17 @@ namespace LearnXamarin.Tests.Services
         [TestCase("002,020,200", Direction.Up, "222,000,000")]
         [TestCase("002,020,200", Direction.Down, "000,000,222")]
         [TestCase("202,020,220", Direction.Right, "004,002,004")]
+        [TestCase("400,400,400", Direction.Down, "000,800,400")]
 
         public void CanMoveGrid(string gridText, Direction dir, string expected)
         {
             var service = new GridService(new RandomService());
             var grid = ParseGrid(gridText);
-            var newGrid = service.MoveGrid(grid, dir);
+            
+            service.MoveAndCombineCells(grid, dir);
+            service.CommitPositions(grid);
 
-            var newGridText = GridToText(newGrid);
+            var newGridText = GridToText(grid);
             newGridText.Should().Be(expected);
         }
 

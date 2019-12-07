@@ -7,8 +7,8 @@
              mc:Ignorable="d"
              x:Class="LearnXamarin.Views.GameGrid"
              BindingContext="{Binding [GridViewModel], Source={StaticResource Locator}}">
-  <ContentView.Content>
-        <Grid x:Name="TheGrid"  BindableLayout.ItemsSource="{Binding Cells}">
+    <ContentView.Content>
+        <Grid x:Name="TheGrid" BindableLayout.ItemsSource="{Binding Cells}" BackgroundColor="MediumSeaGreen">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -32,13 +32,13 @@
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
                     <local:Cell
+                        IsVisible="{Binding Value, Converter={StaticResource GtZero}}"
                         CellValue="{Binding Value}"
-                        Grid.Row="{Binding GridPosition.Y}"
-                        Grid.Column="{Binding GridPosition.X}"
+                        Grid.Row="{Binding OriginalGridPosition.Y}"
+                        Grid.Column="{Binding OriginalGridPosition.X}"
                         />
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </Grid>
-     
     </ContentView.Content>
 </ContentView>

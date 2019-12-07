@@ -14,5 +14,16 @@ namespace LearnXamarin
         {
             InitializeComponent();
         }
+
+        private void StartOverButton_Clicked(object sender, System.EventArgs e)
+        {
+            FunkyMove();
+        }
+
+        public async void FunkyMove()
+        {
+            
+            await ScoreLabel.TranslateTo(-50, 50, 5000, Easing.Linear);
+        }
     }
 }

@@ -15,22 +15,9 @@ namespace LearnXamarin.Services
             _randomService = randomService;
         }
 
-        /// <summary>
-        /// Moves all cells in the grid in the given direction as
-        /// far as they will go, combining adjacent equal cells into
-        /// the sum of their values
-        /// </summary>
-        /// <param name="grid"></param>
-        /// <param name="direction"></param>
-        public GameGrid MoveGrid(GameGrid grid, Direction direction)
+        public GameGrid CreateNew(ICollection<GridCell> cellCollection, Size size, int filledCells)
         {
-            var newCells = MoveAndCombineCells(grid, direction);
-            return new GameGrid(newCells, grid.Size);
-        }
-
-        public GameGrid CreateNew(Size size, int filledCells)
-        {
-            var grid = new GameGrid(new GridCell[] { }, size);
+            var grid = new GameGrid(cellCollection, size);
             foreach (var ix in Enumerable.Range(0, filledCells))
                 AddRandomCell(grid);
 
@@ -45,7 +32,11 @@ namespace LearnXamarin.Services
                 var cell = _randomService.RandomElement(emptyCells);
                 var value = _randomService.RandomNumber(1, 3) * 2;
 
-                grid.AddCell(new GridCell(cell.X, cell.Y, value));
+                var zeroCell = grid.TryGetCell(cell.X, cell.Y);
+                if (zeroCell != null)
+                    zeroCell.Value = value;
+                else 
+                    grid.AddCell(new GridCell(cell.X, cell.Y, value));
             }
         }
 
@@ -68,23 +59,26 @@ namespace LearnXamarin.Services
         /// </summary>
         /// <param name="line"></param>
         /// <returns></returns>
-        public MovingCell[] MoveAndCombineCells(GameGrid grid, Direction direction)
+        public void MoveAndCombineCells(GameGrid grid, Direction direction)
         {
-            var movingCells = new MovingCells(
-                grid.Where(c=>c.Value > 0)
-                    .Select(c => new MovingCell(c)),
-                grid.Size);
-                
-            MoveCells(movingCells, direction);
-            CombineCells(movingCells, direction);
-            MoveCells(movingCells, direction);
+            foreach (var cell in grid)
+                cell.TargetGridPosition = cell.OriginalGridPosition;
 
-            return movingCells
-                .Where(p => p.ValueChanged || p.NewValue > 0)
-                .ToArray();
+            MoveCells(grid, direction);
+            CombineCells(grid, direction);
+            MoveCells(grid, direction);
         }
 
-        private void MoveCells(MovingCells cells, Direction direction)
+        public void CommitPositions(GameGrid grid)
+        {
+            foreach(var cell in grid)
+            {
+                cell.OriginalGridPosition = cell.TargetGridPosition;
+                cell.ValueChanged = false;
+            }
+        }
+
+        private void MoveCells(GameGrid grid, Direction direction)
         {
             var motionOffset = direction.ToOffset();
 
@@ -92,33 +86,59 @@ namespace LearnXamarin.Services
             while (movedAny)
             {
                 movedAny = false;
-                foreach (var cell in cells.Where(c=>c.NewValue >0))
+                foreach (var cell in grid.Where(c=>c.Value>0))
                 {
-                    var newPosition = cell.GridDestination.Translate(motionOffset);
-                    if (cells.IsSpaceAvailable(newPosition))
+                    var newPosition = cell.TargetGridPosition.Translate(motionOffset);
+                    if (IsSpaceAvailable(grid, newPosition))
                     {
-                        cell.GridDestination = newPosition;
+                        cell.TargetGridPosition = newPosition;
                         movedAny = true;
                     }
                 }
             }
         }
 
-        private void CombineCells(MovingCells cells, Direction direction)
+        private void CombineCells(GameGrid grid, Direction direction)
         {
-            foreach (var cell in cells)
+            foreach (var cell in grid)
             {
-                var neighbor = cells.GetNeighbor(cell, direction);
+                var neighbor = GetNeighbor(cell, grid, direction);
 
-                if (neighbor != null 
-                    && !cell.ValueChanged 
-                    && !neighbor.ValueChanged
-                    && neighbor.OriginalValue == cell.OriginalValue)
+                if (neighbor != null && 
+                    !cell.ValueChanged &&
+                    !neighbor.ValueChanged &&
+                    neighbor.Value == cell.Value)
                 {
-                    cell.NewValue = 0;
-                    neighbor.NewValue = neighbor.OriginalValue + cell.OriginalValue;
+                    neighbor.Value = neighbor.Value + cell.Value;
+                    cell.Value = 0;
+                    cell.ValueChanged = true;
+                    neighbor.ValueChanged = true;
                 }
             }
+        }
+
+        public GridCell GetNeighbor(GridCell cell, GameGrid grid, Direction dir)
+        {
+            var offset = dir.ToOffset();
+            var neighborPosition = cell.TargetGridPosition.Translate(offset);
+            var cellAtPosition = grid.FilledCells.FirstOrDefault(p =>
+                p.TargetGridPosition.X == neighborPosition.X
+                && p.TargetGridPosition.Y == neighborPosition.Y);
+
+            return cellAtPosition;
+
+        }
+
+        public bool IsSpaceAvailable(GameGrid grid, Point pt)
+        {
+            if (!pt.IsInBounds(grid.Size))
+                return false;
+
+            var cellAtPosition = grid.FilledCells.FirstOrDefault(p =>
+                p.TargetGridPosition.X == pt.X
+                && p.TargetGridPosition.Y == pt.Y);
+
+            return cellAtPosition == null || cellAtPosition.Value == 0;
         }
     }
 }

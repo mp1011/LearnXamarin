@@ -15,7 +15,7 @@ namespace LearnXamarin.ViewModels
         private readonly GridService _gridService;
         private GameGrid _grid;
 
-        private ObservableCollection<GridCell> _cells;
+        private ObservableCollection<GridCell> _cells = new ObservableCollection<GridCell>();
         public ObservableCollection<GridCell> Cells
         {
             get
@@ -29,6 +29,17 @@ namespace LearnXamarin.ViewModels
             }
         }
 
+        private bool _isTransitioning;
+        public bool IsTransitioning
+        {
+            get => _isTransitioning;
+            set
+            {
+                _isTransitioning = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsTransitioning)));
+            }
+        }
+
         public ICommand SwipeCommand => new Command(directionString =>
         {
             var dir = (directionString.ToString()).ParseEnum<Direction>();
@@ -37,25 +48,25 @@ namespace LearnXamarin.ViewModels
 
         public GridViewModel(GridService gridService)
         {
-            _gridService = gridService;
-            _grid = _gridService.CreateNew(new System.Drawing.Size(5, 5), 2);
-
             Cells = new ObservableCollection<GridCell>();
-            Cells.Clear();
-            foreach (var cell in _grid)
-                Cells.Add(cell);
+
+            _gridService = gridService;
+            _grid = _gridService.CreateNew(Cells, new System.Drawing.Size(5, 5), 2);
         }
 
         private void OnSwiped(Direction direction)
         {
-            _grid = _gridService.MoveGrid(_grid, direction);
+            _gridService.MoveAndCombineCells(_grid, direction);
+            IsTransitioning = true;
+        }
+
+        public void StartNextRound()
+        {
+            _gridService.CommitPositions(_grid);
             _gridService.AddRandomCell(_grid);
             _gridService.AddRandomCell(_grid);
 
-            //hack
-            Cells.Clear();
-            foreach (var cell in _grid)
-                Cells.Add(cell);
+            IsTransitioning = false;
         }
     }
 }

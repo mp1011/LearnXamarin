@@ -15,9 +15,12 @@
            
             <Label FontSize="Large" Text="Your Score:" />
 
-            <Label FontSize="Large" Text="{Binding Score}" />
+            <Label x:Name="ScoreLabel" FontSize="Large" Text="{Binding Score}" />
 
-            <Button FontSize="Large" Text="Start Over"/>
+            <Button FontSize="Large" 
+                    Text="Start Over"
+                    Clicked="StartOverButton_Clicked"
+                    />
 
         </FlexLayout>
 

@@ -7,15 +7,18 @@ namespace LearnXamarin.Models
 {
     public class GameGrid : IEnumerable<GridCell>
     {
-        private List<GridCell> _cells = new List<GridCell>();
+        private ICollection<GridCell> _cells;
 
         public Size Size { get; }
 
-        public GameGrid() { }
+        public GridCell[] FilledCells => _cells.Where(p => p.Value > 0).ToArray();
+
 
         public GridCell TryGetCell(int x, int y)
         {
-            return _cells.FirstOrDefault(p => p.GridPosition.X == x && p.GridPosition.Y == y);
+            return _cells
+                .OrderByDescending(p=>p.Value)
+                .FirstOrDefault(p => p.OriginalGridPosition.X == x && p.OriginalGridPosition.Y == y);
         }
 
         public bool ContainsPoint(Point pt)
@@ -41,17 +44,9 @@ namespace LearnXamarin.Models
             _cells.Add(cell);
         }
 
-        public GameGrid(IEnumerable<MovingCell> cells, Size gridSize)
+        public GameGrid(ICollection<GridCell> cells, Size gridSize)
         {
-            _cells.AddRange(cells
-                .Where(p => p.NewValue > 0)
-               .Select(p => new GridCell(p.GridDestination.X, p.GridDestination.Y, p.NewValue)));
-            Size = gridSize;
-        }
-
-        public GameGrid(IEnumerable<GridCell> cells, Size gridSize)
-        {
-            _cells.AddRange(cells);
+            _cells = cells;
             Size = gridSize;
         }
     }

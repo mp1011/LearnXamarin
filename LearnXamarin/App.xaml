@@ -4,11 +4,14 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ioc="clr-namespace:LearnXamarin.IOC"
+             xmlns:con="clr-namespace:LearnXamarin.Converters"
              mc:Ignorable="d"
              x:Class="LearnXamarin.App">
     <Application.Resources>
         <ResourceDictionary>
             <ioc:ViewModelLocator x:Key="Locator"/>
+            <con:BooleanInverter x:Key="BooleanInverter"/>
+            <con:GtZero x:Key="GtZero"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
