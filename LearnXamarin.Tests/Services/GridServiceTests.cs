@@ -32,20 +32,20 @@ namespace LearnXamarin.Tests.Services
             }
         }
 
-        [TestCase("002,020,200", Direction.Right, "002,002,002")]
-        [TestCase("002,020,200", Direction.Left, "200,200,200")]
-        [TestCase("002,020,200", Direction.Up, "222,000,000")]
-        [TestCase("002,020,200", Direction.Down, "000,000,222")]
-        [TestCase("202,020,220", Direction.Right, "004,002,004")]
-        [TestCase("400,400,400", Direction.Down, "000,800,400")]
+        [TestCase("002,020,200", MoveDirection.Right, "002,002,002")]
+        [TestCase("002,020,200", MoveDirection.Left, "200,200,200")]
+        [TestCase("002,020,200", MoveDirection.Up, "222,000,000")]
+        [TestCase("002,020,200", MoveDirection.Down, "000,000,222")]
+        [TestCase("202,020,220", MoveDirection.Right, "004,002,004")]
+        [TestCase("400,400,400", MoveDirection.Down, "000,800,400")]
 
-        public void CanMoveGrid(string gridText, Direction dir, string expected)
+        public void CanMoveGrid(string gridText, MoveDirection dir, string expected)
         {
             var service = new GridService(new RandomService());
             var grid = ParseGrid(gridText);
             
             service.MoveAndCombineCells(grid, dir);
-            service.CommitPositions(grid);
+            service.EndTurn(grid);
 
             var newGridText = GridToText(grid);
             newGridText.Should().Be(expected);

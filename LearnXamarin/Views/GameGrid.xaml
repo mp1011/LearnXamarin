@@ -5,23 +5,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:LearnXamarin.Views"
              mc:Ignorable="d"
-             x:Class="LearnXamarin.Views.GameGrid"
-             BindingContext="{Binding [GridViewModel], Source={StaticResource Locator}}">
+             x:Class="LearnXamarin.Views.GameGrid">
     <ContentView.Content>
         <Grid x:Name="TheGrid" BindableLayout.ItemsSource="{Binding Cells}" BackgroundColor="MediumSeaGreen">
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.GestureRecognizers>
                 <SwipeGestureRecognizer Direction="Left" Command="{Binding SwipeCommand}" CommandParameter="Left"/>
@@ -32,8 +21,6 @@
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
                     <local:Cell
-                        IsVisible="{Binding Value, Converter={StaticResource GtZero}}"
-                        CellValue="{Binding Value}"
                         Grid.Row="{Binding OriginalGridPosition.Y}"
                         Grid.Column="{Binding OriginalGridPosition.X}"
                         />

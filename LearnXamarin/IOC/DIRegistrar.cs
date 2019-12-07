@@ -12,10 +12,8 @@ namespace LearnXamarin.IOC
 
             serviceCollection.AddSingleton<RandomService>();
             serviceCollection.AddSingleton<GridService>();
-            serviceCollection.AddSingleton<GridViewModel>();
-            serviceCollection.AddSingleton<GridViewModel>();
-
-            serviceCollection.AddSingleton<MainViewModel>();
+            serviceCollection.AddSingleton<ScoringService>();
+            serviceCollection.AddSingleton<GameViewModel>();
 
             var container = serviceCollection.BuildServiceProvider();
             IOCContainer.SetContainer(container);

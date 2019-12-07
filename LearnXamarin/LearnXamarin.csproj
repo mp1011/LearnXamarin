@@ -20,4 +20,8 @@
       <DependentUpon>GameGrid.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="XamarinBase\" />
+  </ItemGroup>
 </Project>

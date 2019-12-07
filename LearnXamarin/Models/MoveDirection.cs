@@ -3,7 +3,7 @@ using System.Drawing;
 
 namespace LearnXamarin.Models
 {
-    public enum Direction
+    public enum MoveDirection
     {
         Up,
         Down,
@@ -13,14 +13,14 @@ namespace LearnXamarin.Models
 
     public static class DirectionExtensions
     {
-        public static Point ToOffset(this Direction dir)
+        public static Point ToOffset(this MoveDirection dir)
         {
             switch(dir)
             {
-                case Direction.Right: return new Point(1, 0);
-                case Direction.Left: return new Point(-1, 0);
-                case Direction.Up: return new Point(0, -1);
-                case Direction.Down: return new Point(0, 1);
+                case MoveDirection.Right: return new Point(1, 0);
+                case MoveDirection.Left: return new Point(-1, 0);
+                case MoveDirection.Up: return new Point(0, -1);
+                case MoveDirection.Down: return new Point(0, 1);
                 default: throw new ArgumentException($"Invalid direction: {dir}");
             }
         }

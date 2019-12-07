@@ -6,12 +6,12 @@
              xmlns:local="clr-namespace:LearnXamarin.Views"
              mc:Ignorable="d"
              x:Class="LearnXamarin.MainPage"
-             BindingContext="{Binding [MainViewModel], Source={StaticResource Locator}}"
+             BindingContext="{Binding [GameViewModel], Source={StaticResource Locator}}"
              >
 
     <FlexLayout Direction="Column">
 
-        <FlexLayout Direction="Row"  FlexLayout.Basis="5%" BackgroundColor="GreenYellow">
+        <FlexLayout Direction="Row"  FlexLayout.Basis="25%" BackgroundColor="GreenYellow">
            
             <Label FontSize="Large" Text="Your Score:" />
 
@@ -19,12 +19,17 @@
 
             <Button FontSize="Large" 
                     Text="Start Over"
-                    Clicked="StartOverButton_Clicked"
+                    Command="{Binding StartGame}"
+                    />
+
+            <Button FontSize="Large" 
+                    Text="Debug"
+                    Clicked="DebugButton_Clicked"
                     />
 
         </FlexLayout>
 
-        <local:GameGrid FlexLayout.Basis="Auto" FlexLayout.Grow="1" BackgroundColor="DarkGray">
+        <local:GameGrid x:Name="TheGameGrid" BindingContext="{Binding}" FlexLayout.Basis="Auto" FlexLayout.Grow="1" BackgroundColor="DarkGray">
 
         </local:GameGrid>
 

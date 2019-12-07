@@ -1,7 +1,8 @@
-﻿
+﻿using LearnXamarin.Extensions;
 using LearnXamarin.Models;
 using LearnXamarin.ViewModels;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -11,27 +12,56 @@ namespace LearnXamarin.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class GameGrid : ContentView
     {
-      
+        public GameViewModel GameViewModel => BindingContext as GameViewModel;
+
+        private List<Cell> _cells = new List<Cell>();
+
+        public string DebugText()
+        {
+            return $"Grid contains {TheGrid.Children.Count} children, and there are {GameViewModel.Cells.Count} Cells";
+        }
+
         public GameGrid()
         {
             InitializeComponent();
             BindingContextChanged += GameGrid_BindingContextChanged;
+            TheGrid.ChildAdded += TheGrid_ChildAdded;
+        }
+
+        private void TheGrid_ChildAdded(object sender, ElementEventArgs e)
+        {
+            System.Console.WriteLine($"Added cell, grid size = {TheGrid.ColumnDefinitions.Count} x {TheGrid.RowDefinitions.Count} ");
+            _cells.Add(e.Element as Cell);
+        }
+
+        protected override void OnBindingContextChanged()
+        {
+            if (GameViewModel != null)
+            {
+                TheGrid.SetNumRowsAndColumns(rows: GameViewModel.GridSize.Height, columns: GameViewModel.GridSize.Width);
+                GameViewModel.PropertyChanged += GameViewModel_PropertyChanged;
+
+                GameViewModel.Cells.CollectionChanged += Cells_CollectionChanged;
+            }
+        }
+
+        private void Cells_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            System.Console.WriteLine($"Cells_CollectionChanged, grid size = {TheGrid.ColumnDefinitions.Count} x {TheGrid.RowDefinitions.Count} ");
+
         }
 
         private void GameGrid_BindingContextChanged(object sender, System.EventArgs e)
         {
-            if(BindingContext is GridViewModel gg)
-            {
-                gg.PropertyChanged += Gg_PropertyChanged;
-            }
+           
         }
 
-        private void Gg_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void GameViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if(BindingContext is GridViewModel gameGrid && e.PropertyName == nameof(gameGrid.IsTransitioning))
+            if(GameViewModel != null && e.PropertyName == nameof(GameViewModel.IsTransitioning))
             {
-                if(gameGrid.IsTransitioning)
-                    TransitionCells(gameGrid);
+                if(GameViewModel.IsTransitioning)
+                    TransitionCells();
                 else
                 {
                     foreach (var visualCell in TheGrid.Children)
@@ -43,36 +73,20 @@ namespace LearnXamarin.Views
             }
         }
 
-        private async void TransitionCells(GridViewModel grid)
+        private void TransitionCells()
         {
-            List<Task> motionTasks = new List<Task>();
-            foreach(var visualCell in TheGrid.Children)
-            {
-                var gameCell = visualCell.BindingContext as GridCell;
-                if(gameCell.Value > 0 && !gameCell.TargetGridPosition.Equals(gameCell.OriginalGridPosition))
-                    motionTasks.Add(TransitionCellToDestination(gameCell,visualCell));
-            }
+            //var motionTasks = _cells
+            //    .Where(cell => cell.NeedsToMove)
+            //    .ToArray() //avoids collection modified problem
+            //    .Select(cell => cell.MoveToDestination())
+            //    .ToArray();
 
-            await Task.WhenAll(motionTasks.ToArray());
+            //await Task.WhenAll(motionTasks.ToArray());
 
-            grid.StartNextRound();
+            //GameViewModel.StartNextRound.Execute(null);
         }
 
-        private async Task TransitionCellToDestination(GridCell cell, VisualElement element)
-        {
-            var transition = CalculateCellTransitionOffset(cell, element);
-            await element.TranslateTo(transition.X, transition.Y, 100);
-        }
-
-        private Point CalculateCellTransitionOffset(GridCell cell, VisualElement element)
-        {
-            var gridHeight = element.Height;
-            var gridWidth = element.Width;
-
-            var deltaY = (cell.TargetGridPosition.Y - cell.OriginalGridPosition.Y) * gridHeight;
-            var deltaX = (cell.TargetGridPosition.X - cell.OriginalGridPosition.X) * gridWidth;
-            return new Point(deltaX,deltaY);
-        }
+      
 
     }
 }

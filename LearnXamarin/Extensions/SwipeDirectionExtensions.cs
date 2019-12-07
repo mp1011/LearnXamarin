@@ -8,14 +8,14 @@ namespace LearnXamarin.Extensions
 {
     public static class SwipeDirectionExtensions
     {
-        public static Direction ToGridDirection(this SwipeDirection swipeDirection)
+        public static MoveDirection ToGridDirection(this SwipeDirection swipeDirection)
         {
             switch(swipeDirection)
             {
-                case SwipeDirection.Left: return Direction.Left;
-                case SwipeDirection.Right: return Direction.Right;
-                case SwipeDirection.Up: return Direction.Up;
-                case SwipeDirection.Down: return Direction.Down;
+                case SwipeDirection.Left: return MoveDirection.Left;
+                case SwipeDirection.Right: return MoveDirection.Right;
+                case SwipeDirection.Up: return MoveDirection.Up;
+                case SwipeDirection.Down: return MoveDirection.Down;
                 default: throw new ArgumentException($"Unknown direction: {swipeDirection}");
             }
         }

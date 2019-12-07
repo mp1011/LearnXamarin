@@ -59,7 +59,7 @@ namespace LearnXamarin.Services
         /// </summary>
         /// <param name="line"></param>
         /// <returns></returns>
-        public void MoveAndCombineCells(GameGrid grid, Direction direction)
+        public void MoveAndCombineCells(GameGrid grid, MoveDirection direction)
         {
             foreach (var cell in grid)
                 cell.TargetGridPosition = cell.OriginalGridPosition;
@@ -69,7 +69,7 @@ namespace LearnXamarin.Services
             MoveCells(grid, direction);
         }
 
-        public void CommitPositions(GameGrid grid)
+        public void EndTurn(GameGrid grid)
         {
             foreach(var cell in grid)
             {
@@ -78,7 +78,7 @@ namespace LearnXamarin.Services
             }
         }
 
-        private void MoveCells(GameGrid grid, Direction direction)
+        private void MoveCells(GameGrid grid, MoveDirection direction)
         {
             var motionOffset = direction.ToOffset();
 
@@ -98,7 +98,7 @@ namespace LearnXamarin.Services
             }
         }
 
-        private void CombineCells(GameGrid grid, Direction direction)
+        private void CombineCells(GameGrid grid, MoveDirection direction)
         {
             foreach (var cell in grid)
             {
@@ -117,7 +117,7 @@ namespace LearnXamarin.Services
             }
         }
 
-        public GridCell GetNeighbor(GridCell cell, GameGrid grid, Direction dir)
+        public GridCell GetNeighbor(GridCell cell, GameGrid grid, MoveDirection dir)
         {
             var offset = dir.ToOffset();
             var neighborPosition = cell.TargetGridPosition.Translate(offset);
