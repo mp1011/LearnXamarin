@@ -7,7 +7,7 @@
              mc:Ignorable="d"
              x:Class="LearnXamarin.MainPage"
              BindingContext="{Binding [GameViewModel], Source={StaticResource Locator}}"
-             >
+             Padding="{StaticResource TopMargin}">
 
     <FlexLayout Direction="Column">
 
