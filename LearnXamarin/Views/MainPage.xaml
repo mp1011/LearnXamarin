@@ -29,9 +29,9 @@
 
         </FlexLayout>
 
-        <local:GameGrid x:Name="TheGameGrid" BindingContext="{Binding}" FlexLayout.Basis="Auto" FlexLayout.Grow="1" BackgroundColor="DarkGray">
+        <local:GridView x:Name="TheGameGrid" BindingContext="{Binding}" FlexLayout.Basis="Auto" FlexLayout.Grow="1" BackgroundColor="DarkGray">
 
-        </local:GameGrid>
+        </local:GridView>
 
     </FlexLayout>
 

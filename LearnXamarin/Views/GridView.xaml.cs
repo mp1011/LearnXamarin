@@ -10,7 +10,7 @@ using Xamarin.Forms.Xaml;
 namespace LearnXamarin.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class GameGrid : ContentView
+    public partial class GridView : ContentView
     {
         public GameViewModel GameViewModel => BindingContext as GameViewModel;
 
@@ -21,7 +21,7 @@ namespace LearnXamarin.Views
             return $"Grid contains {TheGrid.Children.Count} children, and there are {GameViewModel.Cells.Count} Cells";
         }
 
-        public GameGrid()
+        public GridView()
         {
             InitializeComponent();
             BindingContextChanged += GameGrid_BindingContextChanged;
@@ -45,9 +45,10 @@ namespace LearnXamarin.Views
             }
         }
 
+        private int messageCounter = 0;
         private void Cells_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            System.Console.WriteLine($"Cells_CollectionChanged, grid size = {TheGrid.ColumnDefinitions.Count} x {TheGrid.RowDefinitions.Count} ");
+            System.Console.WriteLine($"{messageCounter++}: Cells_CollectionChanged, action={e.Action}, NewItems={e.NewItems?.Count} grid size = {TheGrid.ColumnDefinitions.Count} x {TheGrid.RowDefinitions.Count} ");
 
         }
 

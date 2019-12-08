@@ -13,11 +13,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Views\Cell.xaml.cs">
-      <DependentUpon>Cell.xaml</DependentUpon>
+    <Compile Update="Views\CellView.xaml.cs">
+      <DependentUpon>CellView.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\GameGrid.xaml.cs">
-      <DependentUpon>GameGrid.xaml</DependentUpon>
+    <Compile Update="Views\GridView.xaml.cs">
+      <DependentUpon>GridView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 

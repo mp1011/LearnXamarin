@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:LearnXamarin.Views"
              mc:Ignorable="d"
-             x:Class="LearnXamarin.Views.GameGrid">
+             x:Class="LearnXamarin.Views.GridView">
     <ContentView.Content>
         <Grid x:Name="TheGrid" BindableLayout.ItemsSource="{Binding Cells}" BackgroundColor="MediumSeaGreen">
             <Grid.RowDefinitions>
