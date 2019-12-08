@@ -5,6 +5,8 @@ using System.ComponentModel;
 using System.Windows.Input;
 using LearnXamarin.Extensions;
 using Xamarin.Forms;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LearnXamarin.ViewModels
 {
@@ -40,7 +42,7 @@ namespace LearnXamarin.ViewModels
         }
 
         private ObservableCollection<GridCell> _cells;
-        public ObservableCollection<GridCell> Cells 
+        public ObservableCollection<GridCell> Cells
         {
             get => _cells;
             set
@@ -62,38 +64,35 @@ namespace LearnXamarin.ViewModels
             execute: directionString =>
             {
                 var direction = (directionString.ToString()).ParseEnum<MoveDirection>();
-                _gridService.MoveAndCombineCells(_grid, direction);
-                //IsTransitioning = true;
+                DoTurn(direction);
             },
-            canExecute: o => !IsTransitioning
+            canExecute: o => !_grid.Any(p => p.NeedsToMove)
         );
 
         public ICommand StartNextRound => new Command(() =>
         {
             _gridService.EndTurn(_grid);
-           // _gridService.AddRandomCell(_grid);
-          //  _gridService.AddRandomCell(_grid);
+            _gridService.AddRandomCell(_grid);
+            _gridService.AddRandomCell(_grid);
 
             Score = _scoringService.UpdatePlayerScore(_grid);
-         //   IsTransitioning = false;
         });
 
-
-        //todo: might be better represented as a Game State "waiting for turn, animating, game over, etc"
-        private bool _isTransitioning;
-        public bool IsTransitioning
+        private async void DoTurn(MoveDirection direction)
         {
-            get => _isTransitioning;
-            set
-            {
-                if (IsTransitioning != value)
-                {
-                    _isTransitioning = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsTransitioning)));
-                }
-            }
-        }
+            _gridService.MoveAndCombineCells(_grid, direction);
 
-      
+            while(_grid.Any(cell=>cell.NeedsToMove))
+            {
+                //is there a better way?
+                await Task.Delay(50);
+            }
+
+            //todo, it would be way better to trigger this when the animation finishes
+            _gridService.EndTurn(_grid);
+            _gridService.AddRandomCell(_grid);
+            _gridService.AddRandomCell(_grid);
+            Score = _scoringService.UpdatePlayerScore(_grid);
+        }
     }
 }

@@ -62,11 +62,14 @@ namespace LearnXamarin.Services
         public void MoveAndCombineCells(GameGrid grid, MoveDirection direction)
         {
             foreach (var cell in grid)
-                cell.TargetGridPosition = cell.OriginalGridPosition;
+                cell.TempTargetPosition = cell.OriginalGridPosition;
 
             MoveCells(grid, direction);
             CombineCells(grid, direction);
             MoveCells(grid, direction);
+
+            foreach (var cell in grid)
+                cell.TargetGridPosition = cell.TempTargetPosition;
         }
 
         public void EndTurn(GameGrid grid)
@@ -88,10 +91,10 @@ namespace LearnXamarin.Services
                 movedAny = false;
                 foreach (var cell in grid.Where(c=>c.Value>0))
                 {
-                    var newPosition = cell.TargetGridPosition.Translate(motionOffset);
+                    var newPosition = cell.TempTargetPosition.Translate(motionOffset);
                     if (IsSpaceAvailable(grid, newPosition))
                     {
-                        cell.TargetGridPosition = newPosition;
+                        cell.TempTargetPosition = newPosition;
                         movedAny = true;
                     }
                 }

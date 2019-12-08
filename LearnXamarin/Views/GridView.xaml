@@ -9,8 +9,18 @@
     <ContentView.Content>
         <Grid x:Name="TheGrid" BindableLayout.ItemsSource="{Binding Cells}" BackgroundColor="MediumSeaGreen">
             <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <Grid.GestureRecognizers>
                 <SwipeGestureRecognizer Direction="Left" Command="{Binding SwipeCommand}" CommandParameter="Left"/>
@@ -20,10 +30,12 @@
             </Grid.GestureRecognizers>
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
-                    <local:Cell
-                        Grid.Row="{Binding OriginalGridPosition.Y}"
-                        Grid.Column="{Binding OriginalGridPosition.X}"
-                        />
+                    <local:CellView
+                            BackgroundColor="Red"
+                            IsVisible="{Binding Value, Converter={StaticResource GtZero}}"
+	                        Grid.Row="{Binding OriginalGridPosition.Y}"
+	                        Grid.Column="{Binding OriginalGridPosition.X}"
+	                        />
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </Grid>

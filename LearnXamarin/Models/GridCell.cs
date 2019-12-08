@@ -5,6 +5,8 @@ namespace LearnXamarin.Models
 {
     public class GridCell : INotifyPropertyChanged
     {
+        public bool NeedsToMove => !OriginalGridPosition.Equals(TargetGridPosition);
+
         private int _value;
         public int Value
         {
@@ -28,6 +30,9 @@ namespace LearnXamarin.Models
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OriginalGridPosition)));
             }
         }
+
+
+        public Point TempTargetPosition { get; set; }
 
         private Point _targetGridPosition;
         public Point TargetGridPosition

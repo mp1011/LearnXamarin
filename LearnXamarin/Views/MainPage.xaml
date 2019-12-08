@@ -9,9 +9,9 @@
              BindingContext="{Binding [GameViewModel], Source={StaticResource Locator}}"
              >
 
-    <FlexLayout Direction="Column">
+     <FlexLayout Direction="Column">
 
-        <FlexLayout Direction="Row"  FlexLayout.Basis="25%" BackgroundColor="GreenYellow">
+       <FlexLayout Direction="Row"  FlexLayout.Basis="25%" BackgroundColor="GreenYellow">
            
             <Label FontSize="Large" Text="Your Score:" />
 
@@ -28,11 +28,14 @@
                     />
 
         </FlexLayout>
-
-        <local:GridView x:Name="TheGameGrid" BindingContext="{Binding}" FlexLayout.Basis="Auto" FlexLayout.Grow="1" BackgroundColor="DarkGray">
+        
+       
+         <local:GridView x:Name="TheGameGrid" BindingContext="{Binding}" FlexLayout.Basis="Auto" FlexLayout.Grow="1" BackgroundColor="DarkGray">
 
         </local:GridView>
 
     </FlexLayout>
+
+
 
 </ContentPage>
