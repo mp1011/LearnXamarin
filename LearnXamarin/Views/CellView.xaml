@@ -18,7 +18,7 @@
                 AbsoluteLayout.LayoutBounds="0.1,0.1,0.90,0.90"
                 AbsoluteLayout.LayoutFlags="All"
                 BackgroundColor="LightBlue"
-                TextColor="Black"       
+                TextColor="Purple"       
                 Text="{Binding Value}" 
                 HorizontalTextAlignment="Center"
                 VerticalTextAlignment="Center"

@@ -79,17 +79,20 @@ namespace LearnXamarin.ViewModels
                 _gridService.MoveAndCombineCells(_grid, direction);
                 GameState = GameState.Animating;
             },
-            canExecute: o => !_grid.Any(p => p.NeedsToMove)
+            canExecute: o => GameState == GameState.WaitingForPlayer
         );
 
-        public ICommand StartNextRound => new Command(() =>
-        {
-            _gridService.EndTurn(_grid);
-            _gridService.AddRandomCell(_grid);
-            _gridService.AddRandomCell(_grid);
+        public ICommand StartNextRound => new Command(
+            execute: o =>
+            {
+                _gridService.EndTurn(_grid);
+                _gridService.AddRandomCell(_grid);
+                _gridService.AddRandomCell(_grid);
 
-            Score = _scoringService.UpdatePlayerScore(_grid);
-            GameState = GameState.WaitingForPlayer;
-        });
+                Score = _scoringService.UpdatePlayerScore(_grid);
+                GameState = GameState.WaitingForPlayer;
+            },
+            canExecute: o=>GameState == GameState.Animating
+        );
     }
 }

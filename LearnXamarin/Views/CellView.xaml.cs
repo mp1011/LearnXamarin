@@ -1,6 +1,4 @@
-﻿
-using LearnXamarin.Models;
-using System.Diagnostics;
+﻿using LearnXamarin.Models;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -42,12 +40,6 @@ namespace LearnXamarin.Views
             {
                 System.Console.WriteLine($"Set Label Text to {TheLabel.Text ?? "NULL"} ");
             }
-        }
-
-        protected override void OnBindingContextChanged()
-        {
-            //this should not be neccessary, but the label text doesn't refresh on its own
-            TheLabel.Text = GridCell.Value.ToString(); 
         }
 
         public async Task MoveToDestination()

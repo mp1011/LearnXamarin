@@ -34,9 +34,6 @@ namespace LearnXamarin.Models
             }
         }
 
-
-        public Point TempTargetPosition { get; set; }
-
         private Point _targetGridPosition;
         public Point TargetGridPosition
         {

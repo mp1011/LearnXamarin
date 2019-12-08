@@ -5,7 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:local="clr-namespace:LearnXamarin.Views"
              mc:Ignorable="d"
-             x:Class="LearnXamarin.Views.GridView">
+             x:Class="LearnXamarin.Views.GridView"
+             >
     <ContentView.Content>
         <Grid x:Name="TheGrid" BindableLayout.ItemsSource="{Binding Cells}" BackgroundColor="MediumSeaGreen">
             <Grid.RowDefinitions>
@@ -31,6 +32,7 @@
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
                     <local:CellView
+                        BackgroundColor="Red"
                         IsVisible="{Binding Value, Converter={StaticResource GtZero}}"
 	                    Grid.Row="{Binding OriginalGridPosition.Y}"
 	                    Grid.Column="{Binding OriginalGridPosition.X}"

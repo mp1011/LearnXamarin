@@ -1,4 +1,5 @@
 ﻿using LearnXamarin.IOC;
+using LearnXamarin.Views;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;

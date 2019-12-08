@@ -75,6 +75,7 @@ namespace LearnXamarin.Services
             {
                 cell.SuppressEvents = false;
                 cell.TargetGridPosition = cell.TargetGridPosition;
+                cell.Value = cell.Value;
             }
         }
 

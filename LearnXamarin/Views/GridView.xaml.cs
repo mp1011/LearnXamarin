@@ -16,6 +16,7 @@ namespace LearnXamarin.Views
 
         private List<CellView> _cells = new List<CellView>();
 
+
         public string DebugText()
         {
             var firstCell = TheGrid.Children.FirstOrDefault() as CellView;
@@ -28,16 +29,17 @@ namespace LearnXamarin.Views
         {
             InitializeComponent();
             TheGrid.ChildAdded += TheGrid_ChildAdded;
+            BindingContextChanged += GridView_BindingContextChanged;
+        }
+
+        private void GridView_BindingContextChanged(object sender, System.EventArgs e)
+        {
+            GameViewModel.PropertyChanged += GameViewModel_PropertyChanged;
         }
 
         private void TheGrid_ChildAdded(object sender, ElementEventArgs e)
         {
             _cells.Add(e.Element as CellView);
-        }
-
-        protected override void OnBindingContextChanged()
-        {
-            GameViewModel.PropertyChanged += GameViewModel_PropertyChanged;
         }
 
         private void GameViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

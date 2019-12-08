@@ -12,6 +12,12 @@
             <ioc:ViewModelLocator x:Key="Locator"/>
             <con:BooleanInverter x:Key="BooleanInverter"/>
             <con:GtZero x:Key="GtZero"/>
+            <OnPlatform x:Key="TopMargin"
+                        x:TypeArguments="Thickness"
+                        >
+                <On Platform="Android" Value="0,0,0,0"/>
+                <On Platform="iOS" Value="0,20,0,0"/>
+            </OnPlatform>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
