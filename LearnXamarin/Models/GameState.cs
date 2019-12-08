@@ -3,6 +3,7 @@
     public enum GameState
     {
         WaitingForPlayer,
-        Animating
+        Animating,
+        GameOver
     }
 }

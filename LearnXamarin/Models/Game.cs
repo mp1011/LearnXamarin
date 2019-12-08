@@ -6,9 +6,11 @@ namespace LearnXamarin.Models
     public class Game
     {
         public int Score { get; set; }
+
+        public int Turns { get; set; }
        
         public int NewTilesPerRound { get; } = 2;
 
-        public Size GridSize { get; } = new Size(5, 5);
+        public Size GridSize { get; } = new Size(4, 4);
     }
 }

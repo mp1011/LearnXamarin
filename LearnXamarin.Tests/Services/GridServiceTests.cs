@@ -51,6 +51,20 @@ namespace LearnXamarin.Tests.Services
             newGridText.Should().Be(expected);
         }
 
+        [TestCase("002,020,200",false)]
+        [TestCase("222,222,222", false)]
+        [TestCase("242,424,242", true)]
+        [TestCase("248,824,248", true)]
+        public void CanDetectGameOverState(string gridText, bool gameOver)
+        {
+            var service = new GridService(new RandomService());
+            var grid = ParseGrid(gridText);
+
+            var canMove = service.CanBeMoved(grid);
+            canMove.Should().Be(!gameOver);
+
+        }
+
         private GameGrid ParseGrid(string gridText)
         {
             var rows = gridText.Split(',');

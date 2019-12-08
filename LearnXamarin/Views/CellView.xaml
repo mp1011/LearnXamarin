@@ -9,21 +9,24 @@
 
         <AbsoluteLayout>
             <Frame
-                BackgroundColor="DarkBlue"
+                BorderColor="DarkGreen"
+                BackgroundColor="DarkOliveGreen"
                 AbsoluteLayout.LayoutBounds="0,0,1,1"
                 AbsoluteLayout.LayoutFlags="All"
+                CornerRadius="5"
                 />
 
             <Label x:Name="TheLabel"
-                AbsoluteLayout.LayoutBounds="0.1,0.1,0.90,0.90"
+                AbsoluteLayout.LayoutBounds="0.5,0.5,0.90,0.90"
                 AbsoluteLayout.LayoutFlags="All"
-                BackgroundColor="LightBlue"
+                BackgroundColor="White"
                 TextColor="Purple"       
                 Text="{Binding Value}" 
                 HorizontalTextAlignment="Center"
                 VerticalTextAlignment="Center"
                 FontSize="Large"
                 FontAttributes="Bold"
+                   
                 />
         </AbsoluteLayout>
       

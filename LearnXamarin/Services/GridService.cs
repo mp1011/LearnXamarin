@@ -40,6 +40,36 @@ namespace LearnXamarin.Services
             }
         }
 
+        public bool CanBeMoved(GameGrid grid)
+        {
+            return  CanBeMoved(grid, MoveDirection.Left)
+                    || CanBeMoved(grid, MoveDirection.Right)
+                    || CanBeMoved(grid, MoveDirection.Up)
+                    || CanBeMoved(grid, MoveDirection.Down);
+        }
+
+        private bool CanBeMoved(GameGrid grid, MoveDirection direction)
+        {
+            var motionOffset = direction.ToOffset();
+
+            foreach (var cell in grid.Where(c => c.Value > 0))
+            {
+                var newPosition = cell.OriginalGridPosition.Translate(motionOffset);
+                if (grid.ContainsPoint(newPosition))
+                {
+                    var cellAtPosition = grid.TryGetCell(newPosition.X, newPosition.Y);
+                    if (cellAtPosition == null
+                        || cellAtPosition.Value == 0
+                        || cellAtPosition.Value == cell.Value)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
+
         private IEnumerable<Point> GetEmptyCells(GameGrid grid)
         {
             foreach (var row in Enumerable.Range(0, grid.Size.Height))

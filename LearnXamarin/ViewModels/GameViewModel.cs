@@ -43,6 +43,9 @@ namespace LearnXamarin.ViewModels
                 }
             }
         }
+
+        public System.Drawing.Size GridSize => _game.GridSize;
+
         public int Score
         {
             get => _game.Score;
@@ -68,7 +71,14 @@ namespace LearnXamarin.ViewModels
         {
             Cells.Clear();
             _game = _scoringService.StartGame();
+            Score = 0;
             _grid = _gridService.CreateNew(Cells, _game.GridSize, _game.NewTilesPerRound);
+            GameState = GameState.WaitingForPlayer;
+        });
+
+        public ICommand QuitGame => new Command(() =>
+        {
+            System.Diagnostics.Process.GetCurrentProcess().Kill();
         });
 
         public ICommand SwipeCommand => new Command
@@ -89,8 +99,13 @@ namespace LearnXamarin.ViewModels
                 _gridService.AddRandomCell(_grid);
                 _gridService.AddRandomCell(_grid);
 
+                _game.Turns++;
+
                 Score = _scoringService.UpdatePlayerScore(_grid);
-                GameState = GameState.WaitingForPlayer;
+                if (_gridService.CanBeMoved(_grid))
+                    GameState = GameState.WaitingForPlayer;
+                else
+                    GameState = GameState.GameOver;
             },
             canExecute: o=>GameState == GameState.Animating
         );

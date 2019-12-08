@@ -10,31 +10,64 @@
              Padding="{StaticResource TopMargin}"
              >
 
-     <FlexLayout Direction="Column">
+    <AbsoluteLayout>
 
-        <FlexLayout Direction="Row"  FlexLayout.Basis="25%" BackgroundColor="GreenYellow">
-           
-            <Label FontSize="Large" Text="Your Score:" />
+        <FlexLayout Direction="Column" AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
 
-            <Label x:Name="ScoreLabel" FontSize="Large" Text="{Binding Score}" />
+            <FlexLayout Direction="Row"  FlexLayout.Basis="25%" BackgroundColor="GreenYellow">
 
-            <Button FontSize="Large" 
-                    Text="Start Over"
-                    Command="{Binding StartGame}"
+                <Frame FlexLayout.Basis="70%">
+                    <StackLayout Orientation="Horizontal">
+                        <Label 
+                        FontSize="Medium" 
+                        Text="Your Score:" 
+                    />
+                        <Label 
+                        x:Name="ScoreLabel" 
+                        FontSize="Medium" 
+                        Text="{Binding Score}"
                     />
 
-            <Button FontSize="Large" 
-                    Text="Debug"
-                    Clicked="DebugButton_Clicked"
-                    />
+                    </StackLayout>
+                </Frame>
+
+                <Frame>
+                    <StackLayout>
+                        <Button FontSize="Large" 
+                        Text="Start Over"
+                        Command="{Binding StartGame}"
+                        />
+
+                        <Button FontSize="Large" 
+                        Text="Debug"
+                        Clicked="DebugButton_Clicked"
+                        />
+                    </StackLayout>
+                </Frame>
+
+
+            </FlexLayout>
+
+            <local:GridView 
+                x:Name="TheGameGrid" 
+                FlexLayout.Basis="Auto" 
+                FlexLayout.Grow="1" 
+                BackgroundColor="DarkGray" 
+            />
 
         </FlexLayout>
 
-        <local:GridView x:Name="TheGameGrid" FlexLayout.Basis="Auto" FlexLayout.Grow="1" BackgroundColor="DarkGray">
+        <Frame 
+            x:Name="GameOverPanel" 
+            BackgroundColor="WhiteSmoke"
+            IsVisible="False"
+            AbsoluteLayout.LayoutBounds="0.5,0.5,0.5,0.35" 
+            AbsoluteLayout.LayoutFlags="All">
+            <local:GameOverView />
+        </Frame>
 
-        </local:GridView>
-
-    </FlexLayout>
+    </AbsoluteLayout>
+    
 
 
 

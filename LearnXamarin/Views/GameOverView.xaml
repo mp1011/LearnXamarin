@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:con="clr-namespace:LearnXamarin.Converters"
+             mc:Ignorable="d"
+             x:Class="LearnXamarin.Views.GameOverView">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <con:StringFormatter x:Key="StringFormatter"/>
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <StackLayout>
+            <Label Text="Game Over!" 
+                   FontSize="Title"
+                   HorizontalTextAlignment="Center"
+                   />
+            <Label Text="{Binding Score, 
+                ConverterParameter='Your final score was {0}', 
+                Converter={StaticResource StringFormatter}}" />
+            <Button FontSize="Large" 
+                Text="Play Again"
+                Command="{Binding StartGame}"
+                />
+            <Button FontSize="Large" 
+                Text="Quit"
+                Command="{Binding QuitGame}"
+                />
+        </StackLayout>
+  </ContentView.Content>
+</ContentView>

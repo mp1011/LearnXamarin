@@ -16,7 +16,6 @@ namespace LearnXamarin.Views
 
         private List<CellView> _cells = new List<CellView>();
 
-
         public string DebugText()
         {
             var firstCell = TheGrid.Children.FirstOrDefault() as CellView;
@@ -34,7 +33,11 @@ namespace LearnXamarin.Views
 
         private void GridView_BindingContextChanged(object sender, System.EventArgs e)
         {
-            GameViewModel.PropertyChanged += GameViewModel_PropertyChanged;
+            if (GameViewModel != null)
+            {
+                GameViewModel.PropertyChanged += GameViewModel_PropertyChanged;
+                TheGrid.SetNumRowsAndColumns(GameViewModel.GridSize.Height, GameViewModel.GridSize.Width);
+            }
         }
 
         private void TheGrid_ChildAdded(object sender, ElementEventArgs e)
@@ -46,7 +49,7 @@ namespace LearnXamarin.Views
         {
             if(e.PropertyName == nameof(GameViewModel.GameState))
             {
-                if (GameViewModel.GameState == GameState.Animating)
+                if (GameViewModel?.GameState == GameState.Animating)
                     MoveAllTiles();
             }
         }

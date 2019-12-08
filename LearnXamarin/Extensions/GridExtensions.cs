@@ -7,16 +7,22 @@ namespace LearnXamarin.Extensions
     {
         public static void SetNumRowsAndColumns(this Grid grid, int rows, int columns)
         {
-            grid.ColumnDefinitions.Clear();
-            grid.RowDefinitions.Clear();
+            if (grid.ColumnDefinitions.Count != columns)
+            {
+                grid.ColumnDefinitions.Clear();
 
-            foreach (var row in Enumerable.Range(0, rows))
-                grid.RowDefinitions.Add(new RowDefinition());
+                foreach (var col in Enumerable.Range(0, columns))
+                    grid.ColumnDefinitions.Add(new ColumnDefinition());
+            }
 
-            foreach (var col in Enumerable.Range(0, columns))
-                grid.ColumnDefinitions.Add(new ColumnDefinition());
+            if(grid.RowDefinitions.Count != rows)
+            {
 
-            grid.ForceLayout();
+                grid.RowDefinitions.Clear();
+
+                foreach (var row in Enumerable.Range(0, rows))
+                    grid.RowDefinitions.Add(new RowDefinition());
+            }
         }
     }
 }

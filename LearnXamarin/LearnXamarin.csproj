@@ -24,4 +24,10 @@
   <ItemGroup>
     <Folder Include="XamarinBase\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Views\GameOverView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
 </Project>
