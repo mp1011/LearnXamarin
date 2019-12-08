@@ -29,8 +29,20 @@ namespace LearnXamarin.ViewModels
             StartGame.Execute(null);
         }
 
-        public System.Drawing.Size GridSize => _game.GridSize;
+        private GameState _gameState = GameState.WaitingForPlayer;
 
+        public GameState GameState
+        {
+            get => _gameState;
+            set
+            {
+                if(_gameState != value)
+                {
+                    _gameState = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(GameState)));
+                }
+            }
+        }
         public int Score
         {
             get => _game.Score;
@@ -64,7 +76,8 @@ namespace LearnXamarin.ViewModels
             execute: directionString =>
             {
                 var direction = (directionString.ToString()).ParseEnum<MoveDirection>();
-                DoTurn(direction);
+                _gridService.MoveAndCombineCells(_grid, direction);
+                GameState = GameState.Animating;
             },
             canExecute: o => !_grid.Any(p => p.NeedsToMove)
         );
@@ -76,19 +89,7 @@ namespace LearnXamarin.ViewModels
             _gridService.AddRandomCell(_grid);
 
             Score = _scoringService.UpdatePlayerScore(_grid);
+            GameState = GameState.WaitingForPlayer;
         });
-
-        private async void DoTurn(MoveDirection direction)
-        {
-            _gridService.MoveAndCombineCells(_grid, direction);
-
-            //todo, it would be way better to trigger this when all of the cells have finished moving
-            while (_grid.Any(cell=>cell.NeedsToMove))
-            {
-                await Task.Delay(50);
-            }
-
-            StartNextRound.Execute(null);
-        }
     }
 }

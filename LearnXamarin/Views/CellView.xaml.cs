@@ -30,76 +30,34 @@ namespace LearnXamarin.Views
             return $"Cell Text={textStr} Color={TheLabel.TextColor} Value={GridCell.Value}";
         }
 
-        public int CellValue
-        {
-            get
-            {
-                var cellValue = (int)GetValue(CellValueProperty);
-                return cellValue;
-            }
-            set
-            {
-                SetValue(CellValueProperty, value);
-            }
-        }
-
-        public static readonly BindableProperty CellValueProperty = BindableProperty.Create(
-            propertyName: nameof(CellValue),
-            declaringType: typeof(Cell),
-            returnType: typeof(int),
-            defaultValue: 0,
-            propertyChanged: CellValueChanged,
-            defaultBindingMode: BindingMode.TwoWay);
-
-        private static void CellValueChanged(BindableObject bindable, object oldValue, object newValue)
-        {
-          //  (bindable as Cell).CellValue = (int)newValue;
-        }
-
         public CellView()
         {
             InitializeComponent();
+            TheLabel.PropertyChanged += TheLabel_PropertyChanged;
+        }
+
+        private void TheLabel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == nameof(TheLabel.Text))
+            {
+                System.Console.WriteLine($"Set Label Text to {TheLabel.Text ?? "NULL"} ");
+            }
         }
 
         protected override void OnBindingContextChanged()
         {
-            GridCell.PropertyChanged += GridCell_PropertyChanged;
+            //this should not be neccessary, but the label text doesn't refresh on its own
+            TheLabel.Text = GridCell.Value.ToString(); 
         }
 
-        private void GridCell_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        public async Task MoveToDestination()
         {
-            if (GridCell != null && e.PropertyName == nameof(GridCell.TargetGridPosition))
-            {
-                int index = FooIndex++;
-                System.Console.WriteLine($"{index} Target Changed to {GridCell.TargetGridPosition} from {GridCell.OriginalGridPosition}, NeedsToMove={NeedsToMove}");
-
-                if (NeedsToMove)
-                    MoveToDestination();
-            }
-        }
-
-        public static int FooIndex=0;
-        public async void MoveToDestination()
-        {
-            int index = FooIndex++;
-            var sw = new Stopwatch();
-            sw.Start();
-
-            System.Console.WriteLine($"{index} MoveToDestination Begin {this.TranslationX} {this.TranslationY}");
-          
-
             var translation = CalculateMotionTranslation();
             await this.TranslateTo(translation.X, translation.Y, 100); //todo, use a resource
 
-            sw.Stop();
-
-            System.Console.WriteLine();
-            System.Console.WriteLine($"{index} MoveToDestination End {this.TranslationX} {this.TranslationY} {sw.ElapsedMilliseconds}ms");
-            System.Console.WriteLine();
-
             GridCell.OriginalGridPosition = GridCell.TargetGridPosition;
             TranslationX = 0;
-            TranslationY = 0;
+            TranslationY = 0;          
         }
 
         private Point CalculateMotionTranslation()

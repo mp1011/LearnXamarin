@@ -31,11 +31,10 @@
             <BindableLayout.ItemTemplate>
                 <DataTemplate>
                     <local:CellView
-                            BackgroundColor="Red"
-                            IsVisible="{Binding Value, Converter={StaticResource GtZero}}"
-	                        Grid.Row="{Binding OriginalGridPosition.Y}"
-	                        Grid.Column="{Binding OriginalGridPosition.X}"
-	                        />
+                        IsVisible="{Binding Value, Converter={StaticResource GtZero}}"
+	                    Grid.Row="{Binding OriginalGridPosition.Y}"
+	                    Grid.Column="{Binding OriginalGridPosition.X}"
+	                    />
                 </DataTemplate>
             </BindableLayout.ItemTemplate>
         </Grid>

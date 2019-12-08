@@ -14,7 +14,7 @@
                 AbsoluteLayout.LayoutFlags="All"
                 />
 
-            <Label  x:Name="TheLabel"
+            <Label x:Name="TheLabel"
                 AbsoluteLayout.LayoutBounds="0.1,0.1,0.90,0.90"
                 AbsoluteLayout.LayoutFlags="All"
                 BackgroundColor="LightBlue"

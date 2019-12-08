@@ -5,6 +5,9 @@ namespace LearnXamarin.Models
 {
     public class GridCell : INotifyPropertyChanged
     {
+ 
+        public bool SuppressEvents { get; set; }       //this is ugly
+
         public bool NeedsToMove => !OriginalGridPosition.Equals(TargetGridPosition);
 
         private int _value;
@@ -14,7 +17,7 @@ namespace LearnXamarin.Models
             set
             {
                 _value = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
+                if(!SuppressEvents) PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Value)));
             }
         }
 
@@ -27,7 +30,7 @@ namespace LearnXamarin.Models
             set
             {
                 _originalGridPosition = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OriginalGridPosition)));
+                if (!SuppressEvents) PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(OriginalGridPosition)));
             }
         }
 
@@ -41,7 +44,7 @@ namespace LearnXamarin.Models
             set
             {
                 _targetGridPosition = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TargetGridPosition)));
+                if (!SuppressEvents) PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TargetGridPosition)));
             }
         }
         public GridCell(int x, int y, int value)
