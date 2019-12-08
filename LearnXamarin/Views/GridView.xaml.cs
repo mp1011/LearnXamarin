@@ -18,7 +18,10 @@ namespace LearnXamarin.Views
 
         public string DebugText()
         {
-            return $"Grid contains {TheGrid.Children.Count} children, and there are {GameViewModel.Cells.Count} Cells";
+            var firstCell = TheGrid.Children.First() as CellView;
+            string firstCellText = firstCell?.DebugText() ?? "There are no cells.";
+            
+            return $"Grid contains {TheGrid.Children.Count} children, and there are {GameViewModel.Cells.Count} Cells. {firstCellText}";
         }
 
         public GridView()

@@ -82,17 +82,13 @@ namespace LearnXamarin.ViewModels
         {
             _gridService.MoveAndCombineCells(_grid, direction);
 
-            while(_grid.Any(cell=>cell.NeedsToMove))
+            //todo, it would be way better to trigger this when all of the cells have finished moving
+            while (_grid.Any(cell=>cell.NeedsToMove))
             {
-                //is there a better way?
                 await Task.Delay(50);
             }
 
-            //todo, it would be way better to trigger this when the animation finishes
-            _gridService.EndTurn(_grid);
-            _gridService.AddRandomCell(_grid);
-            _gridService.AddRandomCell(_grid);
-            Score = _scoringService.UpdatePlayerScore(_grid);
+            StartNextRound.Execute(null);
         }
     }
 }

@@ -14,11 +14,11 @@
                 AbsoluteLayout.LayoutFlags="All"
                 />
 
-            <Label  
+            <Label  x:Name="TheLabel"
                 AbsoluteLayout.LayoutBounds="0.1,0.1,0.90,0.90"
                 AbsoluteLayout.LayoutFlags="All"
                 BackgroundColor="LightBlue"
-                TextColor="PaleVioletRed"
+                TextColor="Black"       
                 Text="{Binding Value}" 
                 HorizontalTextAlignment="Center"
                 VerticalTextAlignment="Center"

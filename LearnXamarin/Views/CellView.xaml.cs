@@ -14,6 +14,22 @@ namespace LearnXamarin.Views
 
         public bool NeedsToMove => GridCell != null && !GridCell.TargetGridPosition.Equals(GridCell.OriginalGridPosition);
 
+        public string DebugText()
+        {
+            string textStr;
+            var text = TheLabel.Text;
+            if (text == null)
+                textStr = "NULL";
+            else if (string.IsNullOrEmpty(text))
+                textStr = "EMPTY";
+            else if (string.IsNullOrWhiteSpace(text))
+                textStr = "WHITESPACE";
+            else
+                textStr = text;
+
+            return $"Cell Text={textStr} Color={TheLabel.TextColor} Value={GridCell.Value}";
+        }
+
         public int CellValue
         {
             get
