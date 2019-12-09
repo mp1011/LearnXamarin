@@ -8,6 +8,9 @@ namespace LearnXamarin.IOC
     {
         public static void RegisterTypes()
         {
+            if (IOCContainer.IsInitialized)
+                return;
+
             var serviceCollection = new ServiceCollection();
 
             serviceCollection.AddSingleton<RandomService>();

@@ -1,7 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Linq;
+﻿using FluentAssertions;
+using LearnXamarin.IOC;
+using LearnXamarin.Services;
 using NUnit.Framework;
+using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.UITest;
 using Xamarin.UITest.Queries;
 
@@ -26,12 +28,48 @@ namespace LearnXamarin.Tests
         }
 
         [Test]
-        public void WelcomeTextIsDisplayed()
+        public void CellsAppearWhenAppLoads()
         {
-            AppResult[] results = app.WaitForElement(c => c.Marked("Welcome to Xamarin.Forms!"));
-            app.Screenshot("Welcome screen.");
+            var cells = app.WaitForElement(c => c.Text("2"));
+            cells.Should().NotBeEmpty();
+            cells.Length.Should().Be(2);
+        }
 
-            Assert.IsTrue(results.Any());
+        [TestCase(true)]
+        [TestCase(false)]
+        public void WhenUserSwipesCellsMove(bool leftToRight)
+        {
+            var cells = app.WaitForElement(c => c.Text("2"));
+            cells.Should().NotBeEmpty();
+
+            var xPositionsBefore = cells
+                .ToDictionary(k => k.Id, v => v.Rect.CenterX);
+
+            if (leftToRight)
+                app.SwipeLeftToRight();
+            else
+                app.SwipeRightToLeft();
+
+            cells = app.WaitForElement(c => c.Text("2"));
+            cells.Length.Should().Be(4);
+
+            var xPositionsNow = cells
+              .ToDictionary(k => k.Id, v => v.Rect.CenterX);
+
+            bool anyLess = false;
+            foreach(var oldPos in xPositionsBefore)
+            {
+                var newPos = xPositionsNow[oldPos.Key];
+                if (newPos < oldPos.Value)
+                    anyLess = true;
+                if(leftToRight)
+                    newPos.Should().BeGreaterThan(oldPos.Value);
+                else
+                    newPos.Should().BeLessOrEqualTo(oldPos.Value);
+            }
+
+            anyLess.Should().Be(!leftToRight);
+
         }
     }
 }

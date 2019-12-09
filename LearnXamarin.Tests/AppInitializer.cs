@@ -10,7 +10,11 @@ namespace LearnXamarin.Tests
         {
             if (platform == Platform.Android)
             {
-                return ConfigureApp.Android.StartApp();
+                return ConfigureApp
+                    .Android
+                    .Debug()
+                    .ApkFile(@"C:\Users\Miko\Documents\GitHub\LearnXamarin\LearnXamarin.Android\bin\Debug\com.companyname.learnxamarin.apk")
+                    .StartApp();
             }
 
             return ConfigureApp.iOS.StartApp();

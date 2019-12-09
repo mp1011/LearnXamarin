@@ -7,6 +7,8 @@ namespace LearnXamarin.IOC
     {
         private static ServiceProvider _container;
 
+        public static bool IsInitialized => _container != null;
+
         public static void SetContainer(ServiceProvider container)
         {
             _container = container;

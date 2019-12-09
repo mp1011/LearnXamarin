@@ -5,11 +5,20 @@ namespace LearnXamarin.Services
 
     public class RandomService
     {
-        private readonly Random _rng;
+        private Random _rng;
 
         public RandomService()
         {
+#if DEBUG
+            _rng = new Random(1000);
+#else
             _rng = new Random();
+#endif
+        }
+
+        public void SetRandomSeed(int seed)
+        {
+            _rng = new Random(seed);
         }
 
         public int RandomNumber(int minInclusive, int maxExclusive)
