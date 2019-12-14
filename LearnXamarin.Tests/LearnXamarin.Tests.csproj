@@ -49,8 +49,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Services\GridServiceTests.cs" />
-    <Compile Include="Tests.cs" />
+    <Compile Include="TestHelpers\Extensions.cs" />
+    <Compile Include="TestModels\Comparison.cs" />
+    <Compile Include="TestModels\VisualCell.cs" />
+    <Compile Include="UI\GameplayTests.cs" />
     <Compile Include="AppInitializer.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

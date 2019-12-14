@@ -17,6 +17,7 @@
                 />
 
             <Label x:Name="TheLabel"
+                   AutomationId="GridCell"
                 AbsoluteLayout.LayoutBounds="0.5,0.5,0.90,0.90"
                 AbsoluteLayout.LayoutFlags="All"
                 BackgroundColor="White"
