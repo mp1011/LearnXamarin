@@ -28,7 +28,11 @@ namespace LearnXamarin.Tests
         [Test]
         public void CellsAppearWhenAppLoads()
         {
-            var cells = app.WaitForElement(c => c.Text("2"));
+            var cells = app
+                .GetCells()
+                .Values
+                .ToArray();
+
             cells.Should().NotBeEmpty();
             cells.Length.Should().Be(2);
         }
@@ -59,12 +63,12 @@ namespace LearnXamarin.Tests
                     break;
                 case MoveDirection.Left:
                     cellChanges
-                        .Any(c => c.After.Center.X < c.Before.Center.Y)
+                        .Any(c => c.After.Center.X < c.Before.Center.X)
                         .Should().BeTrue();
                     break;
                 case MoveDirection.Right:
                     cellChanges
-                        .Any(c => c.After.Center.X > c.Before.Center.Y)
+                        .Any(c => c.After.Center.X > c.Before.Center.X)
                         .Should().BeTrue();
                     break;
             }
